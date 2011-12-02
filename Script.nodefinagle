@@ -1,0 +1,17 @@
+import com.twitter.finagle.builder._
+import com.twitter.finagle.http._
+import com.twitter.finagle._
+import java.nio.charset.Charset
+import org.jboss.netty.buffer.{ChannelBuffers, ChannelBuffer}
+import org.jboss.netty.handler.codec.http._
+import org.jboss.netty.handler.codec.http.HttpVersion._
+import org.jboss.netty.handler.codec.http.HttpResponseStatus._
+import com.twitter.util.Future
+
+new Service[HttpRequest, HttpResponse] {
+  def apply(request: HttpRequest) = {
+    val response = new DefaultHttpResponse(HTTP_1_1, OK)
+    response.setContent(ChannelBuffers.copiedBuffer("Sweet!", Charset.forName("UTF8")))
+    Future(response)
+  }
+}
